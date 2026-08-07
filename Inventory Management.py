@@ -27,7 +27,7 @@ class Menu:
                 if a == 1:
                     self.product.Add()
                 elif a == 2:
-                    self.view.view()
+                    self.view.View()
             except ValueError:
                 print("Please Eanter option Number like 1 for Add Product ...")
 class Addproduct:
@@ -59,6 +59,13 @@ class View:
     def View(self):
         self.cursor.execute("select * from products")
         data = self.cursor.fetchall()
+        if data == None:
+            print('No Product Found in Record...')
+        else:
+            print("=== Products ===")
+            for product in data:
+                print(f"Product ID : {product[0]} | Name : {product[1]} | Price : {product[2]} | Stock : {product[4]}")
+            print()
 
 
 m = Menu()
