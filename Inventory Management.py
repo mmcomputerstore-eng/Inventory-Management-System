@@ -19,12 +19,15 @@ def connectdatabase(fx):
 class Menu:
     def __init__(self):
         self.product= Addproduct()
+        self.view = View()
         while True:
-            print("=== Menu ===\n1. Add Product")
+            print("=== Menu ===\n1. Add Product\n2. View All")
             try:
                 a = int(input("Enter option Number to contineu : "))
                 if a == 1:
                     self.product.Add()
+                elif a == 2:
+                    self.view.view()
             except ValueError:
                 print("Please Eanter option Number like 1 for Add Product ...")
 class Addproduct:
@@ -51,6 +54,11 @@ class Addproduct:
         else:
             print(f"product Name {name} Already Found in Record with product ID {data[0]} Dublicate Product Not Allowed...")
 
+class View:
+    @connectdatabase
+    def View(self):
+        self.cursor.execute("select * from products")
+        data = self.cursor.fetchall()
 
 
 m = Menu()
