@@ -3,13 +3,14 @@ from functools import wraps
 from dotenv import load_dotenv
 import mysql.connector as sql
 load_dotenv()
-def connectdatabase(fx,*args,**kwargs):
+def connectdatabase(fx):
     @wraps(fx)
-    def wraper(fx,*args,**kwargs):
+    def wraper(self,*args,**kwargs):
         db = sql.connect(host="localhost",user =os.getenv("user"),password = os.getenv("password"),database=os.getenv("database"))
-        cursor = db.cursor()
-        result = fx(*args,**kwargs)
-        cursor.close()
+        self.cursor = db.cursor()
+        result = fx(self,*args,**kwargs)
+        db.commit()
+        self.cursor.close()
         db.close()
         return result
     return wraper
@@ -22,5 +23,28 @@ class Menu:
             print("=== Menu ===\n1. Add Product")
             try:
                 a = int(input("Enter option Number to contineu : "))
+                if a == 1:
+                    self.product.Add()
             except ValueError:
                 print("Please Eanter option Number like 1 for Add Product ...")
+class Addproduct:
+    @connectdatabase
+    def Add(self):
+        name = input("Eanter Product Name : ")
+        while True:
+            try:
+                price = int(input(f"Eanter {name} Price : "))
+                break
+            except ValueError:
+                print("Please Eanter Price in Numbers...")
+        while True:
+            try:
+                stock = int(input(f"Eanter {name} Stock / Quantity : "))
+                break
+            except ValueError:
+                print("Please Eanter Stock in Numbers...")
+        self.cursor.execute("insert into products (product_name,Purchase_Price,Crunt_Stock) values (%s,%s,%s)",(name,price,stock))
+
+
+
+m = Menu()
