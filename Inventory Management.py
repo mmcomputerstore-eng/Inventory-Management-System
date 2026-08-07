@@ -23,10 +23,10 @@ class Menu:
         while True:
             print("=== Menu ===\n1. Add Product\n2. View All")
             try:
-                a = int(input("Enter option Number to contineu : "))
-                if a == 1:
+                choice = int(input("Enter option Number to contineu : "))
+                if choice == 1:
                     self.product.Add()
-                elif a == 2:
+                elif choice == 2:
                     self.view.View()
             except ValueError:
                 print("Please Eanter option Number like 1 for Add Product ...")
