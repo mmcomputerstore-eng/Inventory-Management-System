@@ -1,14 +1,14 @@
 from database import connect_database
 def menu(self):
     while True:
-        print("=== Catagory Management ===\n1. Add Catagory\n2. View Catagorys\n4. Exit to Main Menu")
+        print("=== Catagory Management ===\n1. Add Catagory\n2. View Catagorys\n3. Exit to Main Menu")
         try:
             option = int(input("Eanter Option Number to Select : "))
             if option == 1 :
                 add_catagory(self)
             elif option == 2:
                 view_catagory(self)
-            elif option == 4:
+            elif option == 3:
                 print("Exit Successfull...")
                 break
             else:
