@@ -1,34 +1,9 @@
-import os
-from functools import wraps
-from dotenv import load_dotenv
-import mysql.connector as sql
-load_dotenv()
-def connect_database(fx):
-    @wraps(fx)
-    def wraper(self,*args,**kwargs):
-        try:
-            self.db = sql.connect(host="localhost",user =os.getenv("user"),password = os.getenv("password"),database=os.getenv("database"))
-            self.cursor = self.db.cursor()
-            result = fx(self,*args,**kwargs)
-            self.db.commit()
-        except sql.Error:
-            print("Faild to Connect Database...")
-        except Exception as e :
-            print(e)
-            print("Un Known Error...")
-        finally:
-            if self.db.is_connected:
-                self.cursor.close()
-                self.db.close()
-
-        return result
-    return wraper
-
+from database import connect_database
+from view_products import View_products
 
 class Menu:
     def run(self):
-        self.product= AddProduct()
-        self.view = View()
+        self.product= ProductManager()
         while True:
             print("=== Menu ===\n1. Add Product\n2. View All")
             try:
@@ -36,16 +11,16 @@ class Menu:
                 if choice == 1:
                     self.product.add_products()
                 elif choice == 2:
-                    self.view.View_products()
+                    View_products(self)
             except ValueError:
                 print("Please Eanter option Number like 1 for Add Product ...")
-class AddProduct:
+class ProductManager:
     @connect_database
-    def add_products(self):
+    def add_product(self):
         name = input("Eanter Product Name : ")
         self.cursor.execute("select * from products where product_name = %s",(name,))
-        data = self.cursor.fetchone()
-        if data ==None:
+        product = self.cursor.fetchone()
+        if product ==None:
             while True:
                 try:
                     price = int(input(f"Eanter {name} Price : "))
@@ -62,20 +37,6 @@ class AddProduct:
             print(f"Product Name {name} Add successfully in Database...")
         else:
             print(f"product Name {name} Already Found in Record with product ID {data[0]} Dublicate Product Not Allowed...")
-
-class View:
-    @connect_database
-    def View_products(self):
-        self.cursor.execute("select * from products")
-        data = self.cursor.fetchall()
-        if not data:
-            print('No Product Found in Record...')
-        else:
-            print("=== Products ===")
-            for product in data:
-                print(f"Product ID : {product[0]} | Name : {product[1]} | Price : {product[2]} | Stock : {product[4]}")
-            print()
-
 
 m = Menu()
 m.run()
