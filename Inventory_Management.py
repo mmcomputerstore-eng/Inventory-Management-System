@@ -2,11 +2,12 @@ from database import connect_database
 from view_products import View_products
 from search_product import Search
 from update_product import update
+from delete_product import delete_product
 class Menu:
     def run(self):
         self.product= ProductManager()
         while True:
-            print("=== Menu ===\n1. Add Product\n2. View All Products\n3. Search Products\n4. Update Product")
+            print("=== Menu ===\n1. Add Product\n2. View All Products\n3. Search Products\n4. Update Product\n5. Delete Product")
             try:
                 choice = int(input("Enter option Number to contineu : "))
                 if choice == 1:
@@ -17,6 +18,8 @@ class Menu:
                     Search(self,"Search")
                 elif choice == 4:
                     update(self)
+                elif choice == 5:
+                    delete_product(self)
             except ValueError:
                 print("Please Eanter option Number like 1 for Add Product ...")
 class ProductManager:

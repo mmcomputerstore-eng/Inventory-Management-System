@@ -9,5 +9,5 @@ def Search(self,opration):
     else:
         for product in products:
             print(f"=== Product Details ===\nProduct ID : {product[0]} | Product Name : {product[1]} | Purchase Price : {product[2]} | Sell Price : {product[4]} | Stock : {product[3]} ")
-        if opration == "Update":
+        if opration != "Search":
             return products
