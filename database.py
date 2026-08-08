@@ -3,16 +3,18 @@ from dotenv import load_dotenv
 import mysql.connector as sql
 from functools import wraps
 load_dotenv()
+
 def connect_database(fx):
     @wraps(fx)
     def wraper(self,*args,**kwargs):
+        result = None
         try:
             self.db = sql.connect(host="localhost",user =os.getenv("db_user"),password = os.getenv("db_password"),database=os.getenv("db_database"))
             self.cursor = self.db.cursor()
             result = fx(self,*args,**kwargs)
             self.db.commit()
-        except sql.Error:
-            print("Faild to Connect Database...")
+        # except sql.Error:
+        #     print("Faild to Connect Database...")
         except Exception as e :
             print(e)
             print("Un Known Error...")
