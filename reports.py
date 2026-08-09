@@ -5,7 +5,7 @@ def reports_menu(self):
             print("== Reports ==\n1. Low Stock\n2. Exit to Main Menu")
             option = int(input("Eanter Option Number to contineu : "))
             if option == 1:
-                pass
+                low_stock(self)
             elif option == 2:
                 print("Exit Successfull...")
                 break
