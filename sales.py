@@ -5,7 +5,7 @@ from coustomers import show_customer
 def sales(self):
     while True:
         try:
-            coustomer_id = int(input( "Eanter Supplier ID : "))
+            coustomer_id = int(input( "Eanter Coustomer ID : "))
             self.cursor.execute("SELECT ID, Name, Email, Phone FROM customers Where ID = %s",(coustomer_id,))
             coustomer = self.cursor.fetchone()
             if coustomer == None:
@@ -56,11 +56,11 @@ def sales(self):
         sell_date = date.today().isoformat()
         total = sum(product[1]*product[2] for product in sell_products)
         self.cursor.execute("insert into sales(customer_id,date,Total) values (%s,%s,%s)",(coustomer_id,sell_date,total))
-        self.cursor.execute("SELECT id,customer_id,date,Total FROM purchases ORDER BY id DESC LIMIT 1")
+        self.cursor.execute("SELECT id,customer_id,date,Total FROM sales ORDER BY id DESC LIMIT 1")
         sale = self.cursor.fetchone()
         print(f"=== Sale Details ===\nSale ID : {sale[0]} | Coustomer ID : {sale[1]} | Date : {sale[2]} | Total : {sale[3]}")
         for product in sell_products:
             self.cursor.execute("update products set Crunt_stock = Crunt_stock+%s where ID = %s",(product[2],product[0]))
-            self.cursor.execute("insert into purchases_details(purchase_id,product_id,quantity,price) values(%s,%s,%s,%s)",(sale[0],product[0],product[2],product[1]))
+            self.cursor.execute("insert into sales_details(sales_id,product_id,quantity,price) values(%s,%s,%s,%s)",(sale[0],product[0],product[2],product[1]))
             print(f"Product ID : {product[0]} | Quantity : {product[2]} | Price : {product[1]}")
     print("Sale Compleated...")

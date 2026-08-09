@@ -52,6 +52,7 @@ def view_customer(self):
             show_customer(customer)
 
 
+
 @connect_database
 def add_customer(self):
     new_name = input("Enter Customer Name : ")
