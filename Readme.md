@@ -11,7 +11,11 @@ This project is designed to manage products, stock, categories, brands, supplier
 This project is being developed as a learning project while improving my Python, MySQL, Git, and GitHub skills.
 
 ---
-
+## How to Run
+install mysql-connector-python
+install dotenv
+run file main.py
+create datatabse using database.py
 ## ✨ Features
 
 ### Product Management
