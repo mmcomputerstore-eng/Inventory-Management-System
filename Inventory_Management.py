@@ -6,7 +6,7 @@ from delete_product import delete_product
 from product_category_management import menu
 from supplier_management import suppliers_menu
 from purchase import purchase
-from customers import customers_menu
+from coustomers import customers_menu
 
 class Menu:
     def run(self):
