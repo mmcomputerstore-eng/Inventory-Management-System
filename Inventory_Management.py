@@ -8,12 +8,13 @@ from supplier_management import suppliers_menu
 from purchase import purchase
 from coustomers import customers_menu
 from sales import sales
+from reports import reports_menu
 
 class Menu:
     def run(self):
         self.product= ProductManager()
         while True:
-            print("=== Menu ===\n1. Add Product\n2. View All Products\n3. Search Products\n4. Update Product\n5. Delete Product\n6. Catagory Management\n7. Supplier Management\n8. Purchase\n9. Coustomer Management\n10. Sale\n11. Exit")
+            print("=== Menu ===\n1. Add Product\n2. View All Products\n3. Search Products\n4. Update Product\n5. Delete Product\n6. Catagory Management\n7. Supplier Management\n8. Purchase\n9. Coustomer Management\n10. Sale\n11. Reports\n12. Exit")
             try:
                 choice = int(input("Enter option Number to contineu : "))
                 if choice == 1:
@@ -36,7 +37,9 @@ class Menu:
                     customers_menu(self)
                 elif choice == 10:
                     sales(self)
-                elif choice == 11:
+                elif choice ==11:
+                    reports_menu(self)
+                elif choice == 12:
                     print("Exit Successfull...")
                     break
             except ValueError:
