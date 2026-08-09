@@ -38,5 +38,5 @@ class Database:
         self.cursor.execute("create table if not exists purchases(id int primary key auto_increment,supplier_id int,date date,Total int,foreign key (supplier_id) references suppliers(id))")
         self.cursor.execute("create table if not exists purchases_details(purchase_id int,product_id int, quantity int , price int ,foreign key (purchase_id)references purchases(id),foreign key (product_id) references products(id))")
         self.cursor.execute("create table if not exists sales(id int primary key auto_increment,customer_id int,date date,Total int,foreign key (customer_id) references customers(id))")
-        self.cursor.execute("create table if not exists sales_details(sales_id int primary key,product_id int, quantity int , price int ,foreign key (sales_id)references sales(id),foreign key (product_id) references products(id))")
+        self.cursor.execute("create table if not exists sales_details(sales_id int,product_id int, quantity int , price int ,foreign key (sales_id)references sales(id),foreign key (product_id) references products(id))")
         print("d")
