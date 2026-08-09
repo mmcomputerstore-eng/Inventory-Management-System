@@ -24,12 +24,13 @@ def export(self):
 
 @connect_database
 def product_data(self):
-    self.cousor.execute("Select id,product_name,purchase_price,sell_price,crunt_stock from products")
-    return self.cousor.fetchall()
+    self.cursor.execute("Select id,product_name,purchase_price,sell_price,crunt_stock from products")
+    products = self.cursor.fetchall()
+    return products
 
 def json_file(self,file_name):
     products = product_data(self)
-    with open (file_name+".json","w",indent = 4) as file:
+    with open (file_name+".json","w") as file:
         for product in products:
             json.dump({
                 "product id" : product[0],
@@ -37,18 +38,21 @@ def json_file(self,file_name):
                 "purchase price" : product[2],
                 "sell price" : product[3],
                 "crunt stock" : product[4]
-            })
+            },file,indent=4)
+    print(f"Products Record Exported Successfull in File Name {file_name}.json")
 
 def csv_file(self,file_name):
     products = product_data(self)
     with open(file_name+".csv","w",newline="") as file:
         writer = csv.writer(file)
-        writer.writerows(["product id","product name","purchase price","sell price","crunt stock"])
-        for product in product_data:
-            writer.writerows([product[0],product[1],product[2],product[3],product[4]])
+        writer.writerow(["product id","product name","purchase price","sell price","crunt stock"])
+        for product in products:
+            writer.writerow([f"{product[0]}",product[1],f"{product[2]}",f"{product[3]}",f"{product[4]}"])
+    print(f"Products Record Exported Successfull in File Name {file_name}.csv")
 
 def txt_file(self,file_name):
     products = product_data(self)
     with open (file_name+".txt","w") as file:
         for product in products:
             file.write(f"product id : {product[0]} | name : {product[1]} | purchase price : {product[2]} | sell price : {product[3]} | crunt stock : {product[4]}\n")
+    print(f"Products Record Exported Successfull in File Name {file_name}.txt")
